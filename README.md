@@ -14,7 +14,7 @@ Data quality is checked in four layers, following the data from collection to la
 
 | Layer | Key question | What I found in the Facebook Likes study |
 |---|---|---|
-| **1. Sampling** | Who is in the data, and how did they get there? | Users *volunteered* through a personality app, so "random" only meant random *within* volunteers. And Likes aren't random: people can only Like what they were shown. |
+| **1. Sampling** | Who is in the data, and how did they get there? | Users *volunteered* through a personality app, so collection was not orthogonal to the traits being predicted: "random" only meant random *within* volunteers. And Likes aren't random: people can only Like what they were shown. |
 | **2. Feature proxies** | Does the feature still mean what we think it means? | A Like's meaning shifts over time (liking Bitcoin: ideology then, investment now), and old Likes are rarely removed. Many groups are silent: no Like ≠ no preference. |
 | **3. Feature embedding** | Does the representation keep the context? | Static SVD embeddings read each Like on its own and lose context: individually harmless Likes can form a very different pattern together. |
 | **4. Labels** | Are the "true" answers actually true? | Self-reported, latent and approximate labels, an inaccurate definition (bisexual users labelled heterosexual), and missing diversity (binary gender only; ethnicity 73% Caucasian, 14% African American). |
@@ -32,7 +32,7 @@ The study linked 58,466 US volunteers' Likes (a user–Like matrix of about 10 m
 ![Quality issues in collecting and sampling](figures/02_sampling_quality.png)
 
 - **Likes are not random.** The famous finding that liking curly fries predicts intelligence isn't about curly fries. It reflects *who was shown* the curly fries page: Likes depend on exposure, and exposure depends on friends and platform feeds.
-- **Being random is relative.** Randomly splitting volunteers into train and test sets only makes the model representative of *volunteers*, P(Y | volunteered), not of the wider population.
+- **Being random is relative.** A sample doesn't need to be random in every sense; it needs to be random *with respect to the response*. In other words, the way data is collected must be **orthogonal to Y**: knowing how someone entered the dataset should tell you nothing about the trait being predicted, so that **P(Y | collected) = P(Y)**. Volunteering for a personality app is not orthogonal to personality, so P(Y | volunteered) ≠ P(Y). Randomly splitting those volunteers into train and test sets can't fix this: it only makes the model representative of *volunteers*, not of the wider population.
 
 ## 3. Feature proxies: a Like is an unstable signal
 
@@ -98,6 +98,7 @@ The same questions apply to any machine learning project, not only this study:
 
 **Sampling**
 - [ ] Who could possibly end up in this dataset, and who couldn't?
+- [ ] Is the way data was collected orthogonal to the response, i.e. does P(Y | collected) = P(Y)?
 - [ ] Is the data "random" only within a self-selected or filtered group?
 - [ ] Did every observation have the same chance of exposure to what was measured?
 
