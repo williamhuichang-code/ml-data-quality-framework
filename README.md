@@ -33,6 +33,7 @@ The study linked 58,466 US volunteers' Likes (a user–Like matrix of about 10 m
 
 - **Likes are not random.** The famous finding that liking curly fries predicts intelligence isn't about curly fries. It reflects *who was shown* the curly fries page: Likes depend on exposure, and exposure depends on friends and platform feeds.
 - **Being random is relative.** A sample doesn't need to be random in every sense; it needs to be random *with respect to the response*. In other words, the way data is collected must be **orthogonal to Y**: knowing how someone entered the dataset should tell you nothing about the trait being predicted, so that **P(Y | collected) = P(Y)**. Volunteering for a personality app is not orthogonal to personality, so P(Y | volunteered) ≠ P(Y). Randomly splitting those volunteers into train and test sets can't fix this: it only makes the model representative of *volunteers*, not of the wider population.
+- **Randomness is task-specific.** Because orthogonality is defined against a particular Y, one sampling process can't be "random" for every task at once. The same collection might be close to orthogonal to age but strongly related to personality, political views or substance use. The study used one sample for more than a dozen prediction targets, so sampling quality has to be checked **task by task**: for each response in question, is the collection process orthogonal to *that* Y?
 
 ## 3. Feature proxies: a Like is an unstable signal
 
@@ -99,6 +100,7 @@ The same questions apply to any machine learning project, not only this study:
 **Sampling**
 - [ ] Who could possibly end up in this dataset, and who couldn't?
 - [ ] Is the way data was collected orthogonal to the response, i.e. does P(Y | collected) = P(Y)?
+- [ ] If one dataset serves several prediction tasks, has that been checked separately for each Y?
 - [ ] Is the data "random" only within a self-selected or filtered group?
 - [ ] Did every observation have the same chance of exposure to what was measured?
 
